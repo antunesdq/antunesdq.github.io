@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matheus Duque | Software Developer</title>
+    <title>Matheus Duque</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <!-- Background container will be created dynamically via JavaScript -->
     
     <header>
         <div class="container">
-            <h1>Matheus Duque</h1>
-            <p class="subtitle">Software Developer</p>
+            <h1>Matheus Duque - <span class="subtitle">Software Developer</span></h1>
         </div>
     </header>
 
@@ -23,7 +23,9 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#experience">Experience</a></li>
+                <li><a href="#education">Education</a></li>
                 <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#languages">Languages</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -41,15 +43,13 @@
                 </div>
             </div>
             <div class="hero-image">
-                <div class="profile-image-placeholder">
-                    <i class="fas fa-user-circle"></i>
-                </div>
+                <img src="images/Matt.jpg" alt="Matheus Duque" class="profile-pic" />
             </div>
         </div>
     </section>
 
     <section id="about" class="container section">
-        <h2>About Me</h2>
+        <h2>👋 About Me</h2>
         <div class="about-content">
             <p>I'm a Software Developer based in Sweden, currently working at Scania Sverige. With a focus on MLOps and Autonomous Solutions, I specialize in combining software engineering expertise with ML capabilities to tackle complex problems in the automotive industry.</p>
             <p>My career journey has taken me from Brazil to Sweden, with experience in various roles from Engineer Intern to Team Leader, focusing on logistics, data analysis, and now software development for autonomous vehicles.</p>
@@ -58,61 +58,454 @@
     </section>
 
     <section id="skills" class="container section">
-        <h2>Technical Skills</h2>
+        <h2>💻 Technical Skills</h2>
         <div class="skills-container">
             <div class="skill-category">
                 <h3><i class="fas fa-code"></i> Programming Languages</h3>
                 <ul class="skill-list">
-                    <li><i class="fab fa-python"></i> Python</li>
-                    <li><i class="fab fa-java"></i> Java</li>
-                    <li><i class="fab fa-android"></i> Kotlin</li>
-                    <li><i class="fas fa-code"></i> YAML</li>
-                    <li><i class="fab fa-markdown"></i> Markdown</li>
-                </ul>
-            </div>
-            <div class="skill-category">
-                <h3><i class="fas fa-robot"></i> AI & ML</h3>
-                <ul class="skill-list">
-                    <li><i class="fas fa-fire"></i> PyTorch</li>
-                    <li><i class="fas fa-search"></i> Deepseek</li>
-                    <li><i class="fas fa-atom"></i> Claude</li>
-                    <li><i class="fas fa-comments"></i> ChatGPT</li>
-                </ul>
-            </div>
-            <div class="skill-category">
-                <h3><i class="fas fa-chart-line"></i> Data Science</h3>
-                <ul class="skill-list">
-                    <li><i class="fas fa-table"></i> Pandas</li>
-                    <li><i class="fas fa-calculator"></i> NumPy</li>
-                    <li><i class="fas fa-chart-pie"></i> Matplotlib</li>
-                    <li><i class="fas fa-project-diagram"></i> MLflow</li>
-                    <li><i class="fas fa-bolt"></i> Databricks</li>
-                </ul>
-            </div>
-            <div class="skill-category">
-                <h3><i class="fas fa-database"></i> Databases</h3>
-                <ul class="skill-list">
-                    <li><i class="fas fa-leaf"></i> MongoDB</li>
-                    <li><i class="fas fa-database"></i> MySQL</li>
-                    <li><i class="fas fa-database"></i> Postgres</li>
-                    <li><i class="fab fa-aws"></i> DynamoDB</li>
+                    <li>
+                        <img src="/icons/python.svg" alt="Python">
+                        <span class="skill-name">Python</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/YAML.svg" alt="YAML">
+                        <span class="skill-name">YAML</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/Markdown.svg" alt="Markdown">
+                        <span class="skill-name">Markdown</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/java.svg" alt="Java">
+                        <span class="skill-name">Java</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/Kotlin.svg" alt="Kotlin">
+                        <span class="skill-name">Kotlin</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/JavaScript.svg" alt="JavaScript">
+                        <span class="skill-name">JavaScript</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/TypeScript.svg" alt="TypeScript">
+                        <span class="skill-name">TypeScript</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div class="skill-category">
                 <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
                 <ul class="skill-list">
-                    <li><i class="fab fa-aws"></i> AWS</li>
-                    <li><i class="fab fa-microsoft"></i> Azure</li>
-                    <li><i class="fas fa-cubes"></i> Terraform</li>
-                    <li><i class="fab fa-docker"></i> Docker</li>
-                    <li><i class="fab fa-gitlab"></i> GitLab CI/CD</li>
+                    <li>
+                        <img src="/icons/databricks.svg" alt="Databricks">
+                        <span class="skill-name">Databricks</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/AWS.svg" alt="AWS">
+                        <span class="skill-name">AWS</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/Docker.svg" alt="Docker">
+                        <span class="skill-name">Docker</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/Linux.svg" alt="Linux">
+                        <span class="skill-name">Linux</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/HashiCorp Terraform.svg" alt="Terraform">
+                        <span class="skill-name">Terraform</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/Azure.svg" alt="Azure">
+                        <span class="skill-name">Azure</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/Google Cloud.svg" alt="Google Cloud Platform">
+                        <span class="skill-name">Google Cloud</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-chart-line"></i> Data Science</h3>
+                <ul class="skill-list">
+                    <li>
+                        <img src="/icons/Pandas.svg" alt="Pandas">
+                        <span class="skill-name">Pandas</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/NumPy.svg" alt="NumPy">
+                        <span class="skill-name">NumPy</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/Apache Spark.svg" alt="Apache Spark">
+                        <span class="skill-name">Apache Spark</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/powerbi.svg" alt="Power BI">
+                        <span class="skill-name">Power BI</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/Matplotlib.svg" alt="Matplotlib">
+                        <span class="skill-name">Matplotlib</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-robot"></i> AI & ML</h3>
+                <ul class="skill-list">
+                    <li>
+                        <img src="/icons/mlflow.svg" alt="MLflow">
+                        <span class="skill-name">MLflow</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/huggingface.svg" alt="Hugging Face">
+                        <span class="skill-name">Hugging Face</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/PyTorch.svg" alt="PyTorch">
+                        <span class="skill-name">PyTorch</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/TensorFlow.svg" alt="TensorFlow">
+                        <span class="skill-name">TensorFlow</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-robot"></i> LLMs & Generative AI</h3>
+                <ul class="skill-list">
+                    <li>
+                        <img src="/icons/openai.svg" alt="OpenAI">
+                        <span class="skill-name">OpenAI</span>
+                    </li>
+                    <li>
+                        <img src="/icons/deepseek.png" alt="LangChain">
+                        <span class="skill-name">DeepSeek</span>
+                    </li>
+                    <li>
+                        <img src="/icons/claude.svg" alt="Claude">
+                        <span class="skill-name">Claude</span>
+                    </li>
+                    <li>
+                        <img src="/icons/gemini.svg" alt="Gemini">
+                        <span class="skill-name">Gemini</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-database"></i> Databases</h3>
+                <ul class="skill-list">
+                    <li>
+                        <img src="/icons/MySQL.svg" alt="MySQL">
+                        <span class="skill-name">MySQL</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/PostgresSQL.svg" alt="PostgreSQL">
+                        <span class="skill-name">Postgres</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/MongoDB.svg" alt="MongoDB">
+                        <span class="skill-name">MongoDB</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-window-maximize"></i> Web Development</h3>
+                <ul class="skill-list">
+                    <li>
+                        <img src="/icons/Django.svg" alt="Django">
+                        <span class="skill-name">Django</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/Flask.svg" alt="Flask">
+                        <span class="skill-name">Flask</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/React.svg" alt="React">
+                        <span class="skill-name">React</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-code-branch"></i> Version Control & CI/CD</h3>
+                <ul class="skill-list">
+                    <li>
+                        <img src="/icons/GitLab.svg" alt="GitLab">
+                        <span class="skill-name">GitLab</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/GitHub.svg" alt="GitHub">
+                        <span class="skill-name">GitHub</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/icons/GitHub Actions.svg" alt="GitHub Actions">
+                        <span class="skill-name">GitHub Actions</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-tools"></i> Tools & Productivity</h3>
+                <ul class="skill-list">
+                    <li>
+                        <img src="/icons/Jira.svg" alt="Jira">
+                        <span class="skill-name">Jira</span>
+                    </li>
+                    <li>
+                        <img src="/icons/Confluence.svg" alt="Confluence">
+                        <span class="skill-name">Confluence</span>
+                    </li>
+                    <li>
+                        <img src="/icons/cursor.svg" alt="Cursor">
+                        <span class="skill-name">Cursor</span>
+                    </li>
+                    <li>
+                        <img src="/icons/Figma.svg" alt="Figma">
+                        <span class="skill-name">Figma</span>
+                    </li>
+                    <li>
+                        <img src="/icons/Postman.svg" alt="Postman">
+                        <span class="skill-name">Postman</span>
+                    </li>
+                    <li>
+                        <img src="/icons/obsidian.svg" alt="Obsidian">
+                        <span class="skill-name">Obsidian</span>
+                    </li>
+                    <li>
+                        <img src="/icons/Anaconda.svg" alt="Anaconda">
+                        <span class="skill-name">Anaconda</span>
+                    </li>
                 </ul>
             </div>
         </div>
     </section>
 
     <section id="experience" class="container section">
-        <h2>Work Experience</h2>
+        <h2>🚀 Work Experience</h2>
         <div class="timeline">
             <div class="timeline-item">
                 <div class="timeline-date">
@@ -120,7 +513,7 @@
                 </div>
                 <div class="timeline-content">
                     <h3>Software Developer</h3>
-                    <h4>Scania Sverige, Södertälje, Sweden</h4>
+                    <h4>Scania Sverige, Södertälje, Sweden <img src="images/flags/sweden.png" alt="Sweden Flag" class="country-flag"></h4>
                     <p>Working on DataOps, ModelOps and DevOps (MLOps) for Autonomous Solutions.</p>
                 </div>
             </div>
@@ -130,7 +523,7 @@
                 </div>
                 <div class="timeline-content">
                     <h3>Team Leader Supply Chain Developer</h3>
-                    <h4>Scania Sverige, Södertälje, Sweden</h4>
+                    <h4>Scania Sverige, Södertälje, Sweden <img src="images/flags/sweden.png" alt="Sweden Flag" class="country-flag"></h4>
                     <p>Worked on a digitalization and automation team for global inhouse logistics development, responsible for developing solutions worldwide and connecting all production units.</p>
                 </div>
             </div>
@@ -140,7 +533,7 @@
                 </div>
                 <div class="timeline-content">
                     <h3>Logistics Developer</h3>
-                    <h4>Scania Sverige, Sweden</h4>
+                    <h4>Scania Sverige, Sweden <img src="images/flags/sweden.png" alt="Sweden Flag" class="country-flag"></h4>
                     <p>Focused on digitalization and automation of logistics. Started projects to make it more efficient and stable. Managed projects/forums with all production units (Brazil, Netherlands, Sweden and France) and started agile implementation within our team.</p>
                 </div>
             </div>
@@ -150,7 +543,7 @@
                 </div>
                 <div class="timeline-content">
                     <h3>Data Analyst</h3>
-                    <h4>Scania Group, Brazil</h4>
+                    <h4>Scania Group, Brazil <img src="images/flags/brazil.png" alt="Brazil Flag" class="country-flag"></h4>
                     <p>Balanced between the data governance and digital office teams, aiding them on the digitalization and automation of processes within the company.</p>
                 </div>
             </div>
@@ -160,7 +553,7 @@
                 </div>
                 <div class="timeline-content">
                     <h3>Process Analyst</h3>
-                    <h4>Scania Group, São Bernardo do Campo, Brazil</h4>
+                    <h4>Scania Group, São Bernardo do Campo, Brazil <img src="images/flags/brazil.png" alt="Brazil Flag" class="country-flag"></h4>
                     <p>Responsible for creating tools to aid the logistics team regarding maintaining the flow stable and reduce costs. Projects built using tools like Power BI, AWS and primarily written in Python.</p>
                 </div>
             </div>
@@ -170,7 +563,7 @@
                 </div>
                 <div class="timeline-content">
                     <h3>Technician</h3>
-                    <h4>Scania Group, São Paulo, Brazil</h4>
+                    <h4>Scania Group, São Paulo, Brazil <img src="images/flags/brazil.png" alt="Brazil Flag" class="country-flag"></h4>
                     <p>Created dashboards to aid logistics processes using Power BI, automated complex processes with Python programming and Oracle SQL. Participated in assessments on warehouses in Brazil, Sweden and Netherlands.</p>
                 </div>
             </div>
@@ -180,19 +573,44 @@
                 </div>
                 <div class="timeline-content">
                     <h3>Engineer Intern</h3>
-                    <h4>Scania Group, São Paulo, Brazil</h4>
+                    <h4>Scania Group, São Paulo, Brazil <img src="images/flags/brazil.png" alt="Brazil Flag" class="country-flag"></h4>
                     <p>Created dashboards to aid the logistic center with information about ongoing process using Power BI. Developed forecast tools to predict the warehouse occupation for the next few months using Python.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <section id="education" class="container section">
+        <h2>🎓 Education</h2>
+        <div class="education-container">
+            <div class="education-item">
+                <div class="education-logo">
+                    <img src="icons/Maua.png" alt="Mauá Institute of Technology" class="edu-logo">
+                </div>
+                <div class="education-details">
+                    <div class="education-top-row">
+                        <h3>B.S. in Mechanical Engineering</h3>
+                        <div class="education-location">
+                            <i class="fas fa-map-marker-alt"></i> São Paulo, Brazil <img src="images/flags/brazil.png" alt="Brazil Flag" class="country-flag">
+                        </div>
+                    </div>
+                    <div class="education-bottom-row">
+                        <h4>Mauá Institute of Technology</h4>
+                        <div class="education-date">
+                            <i class="far fa-calendar-alt"></i> Feb 2014 - Dec 2019
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="certifications" class="container section">
-        <h2>Certifications</h2>
+        <h2>🏆 Certifications</h2>
         <div class="certifications-container">
             <div class="certification-card">
                 <div class="certification-logo">
-                    <i class="fas fa-database"></i>
+                    <img src="/certificates/databricks-certified-data-engineer-associate.png" alt="Databricks Certification" class="cert-image">
                 </div>
                 <div class="certification-details">
                     <h3>Databricks Engineer Associate</h3>
@@ -201,7 +619,7 @@
             </div>
             <div class="certification-card">
                 <div class="certification-logo">
-                    <i class="fab fa-aws"></i>
+                    <img src="/certificates/aws-certified-cloud-practitioner.png" alt="AWS Certification" class="cert-image">
                 </div>
                 <div class="certification-details">
                     <h3>AWS Cloud Practitioner</h3>
@@ -211,13 +629,64 @@
         </div>
     </section>
 
+    <section id="languages" class="container section">
+        <h2>🌍 Languages</h2>
+        <div class="languages-container">
+            <div class="language-item">
+                <span class="language-name">Portuguese <img src="images/flags/brazil.png" alt="Brazil Flag" class="language-flag"></span>
+                <div class="language-proficiency">
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot filled"></span>
+                </div>
+            </div>
+            <div class="language-item">
+                <span class="language-name">English <img src="images/flags/us.png" alt="US Flag" class="language-flag"></span>
+                <div class="language-proficiency">
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot filled"></span>
+                </div>
+            </div>
+            <div class="language-item">
+                <span class="language-name">Spanish <img src="images/flags/peru.png" alt="Peru Flag" class="language-flag"></span>
+                <div class="language-proficiency">
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot"></span>
+                    <span class="proficiency-dot"></span>
+                </div>
+            </div>
+            <div class="language-item">
+                <span class="language-name">Swedish <img src="images/flags/sweden.png" alt="Sweden Flag" class="language-flag"></span>
+                <div class="language-proficiency">
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot filled"></span>
+                    <span class="proficiency-dot"></span>
+                    <span class="proficiency-dot"></span>
+                    <span class="proficiency-dot"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="projects" class="container section">
-        <h2>Featured Projects</h2>
+        <h2>💼 Featured Projects</h2>
         <div class="projects-grid">
             <div class="project-card">
                 <div class="project-header">
+                    <div class="project-gif-container">
+                        <img src="gifs/Mosquito.gif" alt="Project Mosquito Demo" class="project-gif">
+                    </div>
+                    <div class="project-overlay">
                     <i class="fas fa-mosquito"></i>
                     <h3>Project Mosquito</h3>
+                    </div>
                 </div>
                 <p>Android app that connects to DJI drone to read barcodes and make REST API calls.</p>
                 <div class="project-footer">
@@ -229,8 +698,13 @@
             </div>
             <div class="project-card">
                 <div class="project-header">
+                    <div class="project-gif-container">
+                        <img src="gifs/CommentLinker.gif" alt="Comment-Linker Demo" class="project-gif">
+                    </div>
+                    <div class="project-overlay">
                     <i class="fas fa-link"></i>
                     <h3>Comment-Linker</h3>
+                    </div>
                 </div>
                 <p>Create clickable links within comments in Python files. Reference other files, locations, or specific lines in your codebase.</p>
                 <div class="project-footer">
@@ -245,19 +719,19 @@
     </section>
 
     <section id="contact" class="container section">
-        <h2>Get In Touch</h2>
+        <h2>📫 Get In Touch</h2>
         <div class="contact-container">
             <div class="contact-info">
                 <p>I'm always open to discussing new projects, opportunities, or partnerships.</p>
                 <div class="social-links">
-                    <a href="https://github.com/antunesdq" target="_blank" class="social-link">
-                        <i class="fab fa-github"></i> GitHub
+                    <a href="https://github.com/antunesdq" target="_blank" class="social-link github">
+                        <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://linkedin.com/in/antunesdq" target="_blank" class="social-link">
-                        <i class="fab fa-linkedin"></i> LinkedIn
+                    <a href="https://linkedin.com/in/antunesdq" target="_blank" class="social-link linkedin">
+                        <i class="fab fa-linkedin"></i>
                     </a>
-                    <a href="mailto:contact@example.com" class="social-link">
-                        <i class="fas fa-envelope"></i> Email
+                    <a href="mailto:antunesdq@gmail.com" class="social-link email">
+                        <i class="fas fa-envelope"></i>
                     </a>
                 </div>
             </div>
@@ -266,7 +740,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 Matheus Duque. All rights reserved.</p>
+            <p>&copy; 2025 Matheus Duque. All rights reserved.</p>
         </div>
     </footer>
 

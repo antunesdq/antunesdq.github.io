@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set up parallax scrolling for background
     setupParallaxEffect();
     
+    // Create day of life chart if the canvas exists
+    const dayChartCanvas = document.getElementById('dayChart');
+    if (dayChartCanvas) {
+        createDayOfLifeChart();
+    }
+    
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('nav a');
     
@@ -131,14 +137,14 @@ function initBackground() {
     lineContainer.innerHTML = '';
     activeLines = [];
     
-    // Create initial flowing lines
-    for (let i = 0; i < 8; i++) {
+    // Create initial flowing lines - increased from 8 to 12
+    for (let i = 0; i < 12; i++) {
         createFlowingLine();
     }
     
-    // Periodically create new lines
+    // Periodically create new lines - increased max lines from 15 to 25 and probability from 0.3 to 0.5
     backgroundAnimationInterval = setInterval(() => {
-        if (activeLines.length < 15 && Math.random() < 0.3) {
+        if (activeLines.length < 25 && Math.random() < 0.5) {
             createFlowingLine();
         }
     }, 1000);
@@ -154,7 +160,7 @@ function createFlowingLine() {
     // Always start from the left side at a random y position
     const startY = Math.random() * (containerRect.height - 100) + 50;
     const speed = Math.random() * 1.5 + 0.5; // pixels per frame
-    const maxSegments = Math.floor(Math.random() * 5) + 5; // 5-10 segments
+    const maxSegments = Math.floor(Math.random() * 5) + 8; // Increased from 5-10 to 8-13 segments
     
     // Pick a color
     const colors = [
@@ -207,23 +213,25 @@ function createLineSegment(line) {
         // If moving vertically, can only change to right
         if (line.direction === 'right') {
             // When moving right, can change to up or down or continue right
+            // Reduced chance to change direction to favor right movement
             const rand = Math.random();
-            if (rand < 0.3) {
+            if (rand < 0.2) {
                 line.direction = 'up';
-            } else if (rand < 0.6) {
+            } else if (rand < 0.4) {
                 line.direction = 'down';
             }
             // Otherwise keep going right
         } else {
             // When moving up or down, can only change to right
-            if (Math.random() < 0.7) {
+            if (Math.random() < 0.8) { // Increased chance to go right from 0.7 to 0.8
                 line.direction = 'right';
             }
             // Otherwise keep going in the same vertical direction
         }
     }
     
-    const segmentLength = Math.random() * 150 + 50; // 50-200 pixels
+    // Increased segment length for longer lines
+    const segmentLength = Math.random() * 200 + 100; // 100-300 pixels (was 50-200)
     const container = document.getElementById('background-container');
     const containerRect = container.getBoundingClientRect();
     
@@ -259,10 +267,14 @@ function createLineSegment(line) {
         segment.style.height = `${segmentLength}px`;
     }
     
-    // Boundary checks to keep lines within the container
-    if (endX > containerRect.width) {
-        endX = containerRect.width - 20;
+    // Boundary checks - now we don't restrict the right boundary to let lines go all the way to the edge
+    // Only check if we're going beyond the container width for cleanup purposes
+    if (endX > containerRect.width + 300) { // Allow to go 300px beyond viewport
+        endX = containerRect.width + 300;
         segment.style.width = `${endX - line.x}px`;
+        
+        // If we've reached far beyond the right edge, mark as completed
+        line.completed = true;
     }
     
     if (endY < 0) {
@@ -408,4 +420,73 @@ function animateFlowingLines() {
     }
     
     requestAnimationFrame(animateFlowingLines);
+}
+
+// Create Day of Life chart
+function createDayOfLifeChart() {
+    const ctx = document.getElementById('dayChart').getContext('2d');
+    
+    // Data for the pie chart (hours per activity)
+    const data = {
+        labels: [
+            'Working',
+            'Gaming',
+            'Studying',
+            'Sleeping',
+            'Exercising',
+            'Time with friends and family'
+        ],
+        datasets: [{
+            data: [8, 3, 2, 7, 1, 3], // Hours per day for each activity
+            backgroundColor: [
+                '#9575cd', // Working - purple
+                '#ba68c8', // Gaming - pink/purple
+                '#7986cb', // Studying - blue
+                '#673ab7', // Sleeping - deep purple
+                '#5e35b1', // Exercising - purple
+                '#512da8'  // Time with friends - purple
+            ],
+            borderColor: '#121212',
+            borderWidth: 2,
+            hoverOffset: 10
+        }]
+    };
+    
+    // Configuration for the pie chart
+    const config = {
+        type: 'doughnut',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            cutout: '40%',
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: '#242424',
+                    titleColor: '#f0f0f0',
+                    bodyColor: '#e0e0e0',
+                    displayColors: false,
+                    caretSize: 0,
+                    cornerRadius: 4,
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.raw || 0;
+                            return `${label}: ${value} hours`;
+                        }
+                    }
+                }
+            },
+            animation: {
+                animateRotate: true,
+                animateScale: true
+            }
+        }
+    };
+    
+    // Create the chart
+    new Chart(ctx, config);
 } 
