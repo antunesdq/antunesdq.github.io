@@ -1,5 +1,8 @@
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Handle page loading animation
+    handlePageLoading();
+    
     // Create background container
     createBackgroundContainer();
     
@@ -81,7 +84,36 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         </style>
     `;
+    
+    // Initialize scroll animations for sections
+    initScrollAnimations();
+    
+    // Add hover effects for skill items
+    addSkillItemsHoverEffect();
+    
+    // Add typewriter effect to hero heading
+    animateHeroHeading();
 });
+
+// Handle page loading animation
+function handlePageLoading() {
+    const pageTransition = document.querySelector('.page-transition');
+    const body = document.body;
+    
+    // Prevent scrolling while loading
+    body.style.overflow = 'hidden';
+    
+    // Hide the loader after a short delay
+    setTimeout(() => {
+        pageTransition.classList.add('loaded');
+        body.style.overflow = 'auto';
+        
+        // Remove the loader from the DOM after transition completes
+        setTimeout(() => {
+            pageTransition.style.display = 'none';
+        }, 500);
+    }, 1200);
+}
 
 // Create the background container
 function createBackgroundContainer() {
@@ -99,17 +131,31 @@ function createBackgroundContainer() {
     container.style.position = 'fixed';
     container.style.top = '0';
     container.style.left = '0';
-    container.style.width = '100%';
-    container.style.height = '100%';
+    container.style.width = '100vw';
+    container.style.height = '100vh';
     container.style.zIndex = '-1';
     container.style.overflow = 'hidden';
     container.style.pointerEvents = 'none';
     
-    // Set a dark background gradient
-    container.style.background = 'var(--background-color)';
+    // Set a dark background with subtle gradient
+    container.style.background = 'linear-gradient(135deg, var(--darker-color) 0%, var(--dark-color) 100%)';
     
     // Insert at the beginning of the body
     body.insertBefore(container, body.firstChild);
+    
+    // Add a noise texture overlay
+    const noiseOverlay = document.createElement('div');
+    noiseOverlay.id = 'noise-overlay';
+    noiseOverlay.style.position = 'fixed';
+    noiseOverlay.style.top = '0';
+    noiseOverlay.style.left = '0';
+    noiseOverlay.style.width = '100vw';
+    noiseOverlay.style.height = '100vh';
+    noiseOverlay.style.zIndex = '-1';
+    noiseOverlay.style.opacity = '0.03';
+    noiseOverlay.style.pointerEvents = 'none';
+    noiseOverlay.style.backgroundImage = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`;
+    body.insertBefore(noiseOverlay, body.firstChild);
     
     // Global variables for animation tracking
     window.activeLines = [];
@@ -123,31 +169,256 @@ function setupParallaxEffect() {
     // Update on scroll
     window.addEventListener('scroll', () => {
         const scrollPosition = window.pageYOffset;
-        const parallaxRate = scrollPosition * 0.1;
+        const parallaxRate = scrollPosition * 0.15;
         
         // Move the background upward as user scrolls down
         container.style.transform = `translateY(-${parallaxRate}px)`;
     });
 }
 
+// Scroll animations
+function initScrollAnimations() {
+    // Create the IntersectionObserver
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // If element is in viewport
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                // Unobserve after animation is triggered
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    // Observe all sections
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        // Add the fade-in class
+        section.classList.add('fade-in');
+        // Observe the section
+        observer.observe(section);
+    });
+    
+    // Add CSS for the animations
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Add hover effects to skill items
+function addSkillItemsHoverEffect() {
+    const skillItems = document.querySelectorAll('.skill-list li');
+    
+    // Skill descriptions - brief explanations for each technology
+    const skillDescriptions = {
+        // Programming Languages
+        "Python": "Versatile language for ML, data analysis, and web development. Key for AI/ML due to its rich ecosystem of data science libraries.",
+        "YAML": "Human-readable data serialization standard used for configuration files in CI/CD pipelines, Kubernetes, and cloud infrastructure.",
+        "Markdown": "Lightweight markup language for creating formatted documentation with plain text, widely used in GitHub and project documentation.",
+        "Java": "Robust, object-oriented language powering enterprise applications with 'write once, run anywhere' capability via the JVM.",
+        "Kotlin": "Modern JVM language offering concise syntax and null safety, popular for Android development with full Java interoperability.",
+        "JavaScript": "Essential web programming language enabling dynamic content and interactivity in browsers, forming the core of modern web development.",
+        "TypeScript": "JavaScript superset adding static typing for improved developer experience, enhanced code quality, and enterprise-scale maintainability.",
+        
+        // Cloud & DevOps
+        "Databricks": "Unified analytics platform built on Apache Spark that simplifies big data processing and ML model deployment on cloud platforms.",
+        "AWS": "Leading cloud provider with 200+ services for computing, storage, database, ML and analytics, powering millions of applications worldwide.",
+        "Docker": "Containerization platform that standardizes application packaging, making software portable across different environments and infrastructure.",
+        "Linux": "Open-source OS kernel providing stability and security for servers, embedded systems, and cloud infrastructure worldwide.",
+        "Terraform": "Infrastructure as Code tool enabling declarative resource provisioning across all major cloud providers with version-controlled configuration.",
+        "Azure": "Microsoft's cloud computing service with integrated tools for app development, ML, analytics, and seamless Microsoft ecosystem integration.",
+        "Google Cloud": "Cloud platform emphasizing data analytics, ML, and containers with advanced AI capabilities and a global network infrastructure.",
+        
+        // Data Science
+        "Pandas": "Python data manipulation library providing DataFrame structures for efficient data cleaning, transformation, and analysis workflows.",
+        "NumPy": "Fundamental scientific computing package for Python with powerful n-dimensional array objects and mathematical function libraries.",
+        "Scikit-learn": "Python ML library featuring consistent API for classification, regression, and clustering with robust preprocessing and model selection tools.",
+        "Apache Spark": "Unified distributed computing engine for large-scale data processing, enabling batch, streaming, and machine learning workloads with fault-tolerance.",
+        "Power BI": "Microsoft's business analytics platform offering interactive data visualization with drag-and-drop simplicity and AI-powered insights for enterprise reporting.",
+        "Matplotlib": "Comprehensive Python visualization library for creating static, animated, and interactive plots with publication-quality output.",
+        "Plotly": "Interactive visualization library creating web-based charts and dashboards with easy integration into Python, R, and JavaScript applications.",        
+        
+        // AI & ML
+        "MLflow": "Open-source platform for ML lifecycle management including experiment tracking, reproducible runs, model packaging and registry.",
+        "Hugging Face": "AI community platform providing tools, datasets, and pre-trained models for NLP applications with simple API access and fine-tuning capabilities.",
+        "PyTorch": "Dynamic deep learning framework emphasizing flexibility and intuitive design with strong GPU acceleration and research community adoption.",
+        "TensorFlow": "Google's open-source ML platform supporting deep learning with flexible architecture for deployment across CPUs, GPUs, and TPUs.",
+        
+        // LLMs & Generative AI
+        "OpenAI": "Leading provider of AI models and APIs for natural language processing, including GPT-4, DALL-E, and Whisper.",
+        "DeepSeek": "Chinese AI company offering a range of AI models and APIs for natural language processing.",
+        "Claude": "AI assistant developed by Anthropic, offering a chat-based interface with advanced reasoning capabilities.",
+        "Gemini": "Google's AI model family offering diverse capabilities including search, translation, and image generation.",
+        "ollama": "Open-source alternative to OpenAI's API, offering a range of AI models and APIs for natural language processing.",
+        
+        // Databases
+        "PostgreSQL": "Powerful open-source object-relational database with strong SQL compliance, extensive data types, and robust transaction support.",
+        "MongoDB": "Document-oriented NoSQL database optimized for flexibility, scalability, and performance with JSON-like document storage and query capabilities.",
+        "MySQL": "Popular open-source relational database system known for reliability, performance, and ease of use in web applications and enterprise environments.",
+        
+        // Web Development
+        "Django": "High-level Python web framework emphasizing reusability, rapid development, and the DRY principle with built-in admin interface.",
+        "Flask": "Lightweight WSGI web framework in Python designed for rapid development with flexibility, simplicity, and fine-grained control.",
+        "React": "JavaScript library for building user interfaces with a component-based architecture, enabling efficient development of dynamic single-page applications.",
+        "Streamlit": "Python library for rapidly creating and sharing data apps with minimal code, turning data scripts into shareable web applications.",
+        "CSS": "Style sheet language used for describing the presentation of a document written in HTML, controlling layout, colors, and responsive design.",
+        
+        // Version Control & CI/CD
+        "GitLab": "DevOps platform providing version control, CI/CD pipelines, and project management tools in a single integrated application with self-hosting options.",
+        "GitHub": "Web-based platform for Git repositories offering collaboration features, issue tracking, CI/CD integration, and extensive community projects.",
+        "GitHub Actions": "GitHub's integrated CI/CD solution allowing automated workflow creation directly in repositories for testing, building, and deploying code.",
+        
+        // Tools & Productivity
+        "Jira": "Issue tracking and project management tool by Atlassian designed for agile development teams with customizable workflows and reporting.",
+        "Confluence": "Team workspace by Atlassian for creating, sharing, and collaborating on projects, documentation, and company knowledge bases.",
+        "Cursor": "AI-powered code editor built on VSCode that enhances productivity with advanced code generation, explanation, and refactoring capabilities.",
+        "Figma": "Cloud-based design and prototyping tool enabling collaborative interface design with real-time editing and comprehensive component libraries.",
+        "Postman": "API platform for building and using APIs with features for request building, testing, documentation, mocking, and monitoring.",
+        "Obsidian": "Knowledge management application using markdown files and graph visualization to create a connected personal knowledge base.",
+        "Anaconda": "Python/R distribution platform that simplifies package management and deployment for data science with pre-configured environments.",
+    };
+    
+    // Process each skill item
+    skillItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            // Get the skill name and find its description
+            const skillName = item.querySelector('.skill-name').textContent;
+            const description = skillDescriptions[skillName] || `${skillName} - Technology used in software development`;
+            
+            // Set the tooltip to show the description
+            item.setAttribute('data-tooltip', description);
+            
+            // Emphasize the filled stars
+            const filledStars = item.querySelectorAll('.filled');
+            filledStars.forEach(star => {
+                star.style.color = 'var(--primary-color)';
+                star.style.transform = 'scale(1.2)';
+                star.style.transition = 'transform 0.3s ease-out, color 0.3s ease-out';
+            });
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            // Restore normal state
+            const filledStars = item.querySelectorAll('.filled');
+            filledStars.forEach(star => {
+                star.style.transform = 'scale(1)';
+            });
+        });
+    });
+    
+    // Calculate average skill level for each category
+    updateCategorySkillLines();
+}
+
+// Calculate and update the blue line width based on average skill level
+function updateCategorySkillLines() {
+    const skillCategories = document.querySelectorAll('.skill-category');
+    
+    skillCategories.forEach(category => {
+        // Add skill level indicator if needed
+        let indicator = category.querySelector('.skill-level-indicator');
+        if (!indicator) {
+            // Create the indicator
+            indicator = document.createElement('span');
+            indicator.className = 'skill-level-indicator';
+            
+            // Append to h3
+            const headerElement = category.querySelector('h3');
+            if (headerElement) {
+                headerElement.appendChild(indicator);
+            }
+        }
+    });
+}
+
+// Animate the hero heading with a typewriter effect
+function animateHeroHeading() {
+    const heroHeading = document.querySelector('.hero-text h2 span');
+    if (!heroHeading) return;
+    
+    const text = heroHeading.textContent;
+    heroHeading.textContent = '';
+    heroHeading.style.borderRight = '0.08em solid var(--primary-color)';
+    heroHeading.style.animation = 'blinkCursor 0.7s steps(1) infinite';
+    
+    // Add the cursor blink animation
+    const style = document.createElement('style');
+    style.innerHTML = `
+        @keyframes blinkCursor {
+            50% { border-color: transparent; }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Type out each character
+    let i = 0;
+    const typeInterval = setInterval(() => {
+        if (i < text.length) {
+            heroHeading.textContent += text.charAt(i);
+            i++;
+        } else {
+            clearInterval(typeInterval);
+            // Remove cursor after typing is complete
+            setTimeout(() => {
+                heroHeading.style.borderRight = 'none';
+                heroHeading.style.animation = 'none';
+            }, 1500);
+        }
+    }, 100);
+}
+
 // Background animation functions
 function initBackground() {
-    clearInterval(backgroundAnimationInterval);
+    clearInterval(window.backgroundAnimationInterval);
     const lineContainer = document.getElementById('background-container');
     lineContainer.innerHTML = '';
-    activeLines = [];
+    window.activeLines = [];
     
-    // Create initial flowing lines - increased from 8 to 12
-    for (let i = 0; i < 12; i++) {
+    // Create initial flowing lines - increased from 15 to 25
+    for (let i = 0; i < 25; i++) {
         createFlowingLine();
     }
     
-    // Periodically create new lines - increased max lines from 15 to 25 and probability from 0.3 to 0.5
-    backgroundAnimationInterval = setInterval(() => {
-        if (activeLines.length < 25 && Math.random() < 0.5) {
+    // Periodically create new lines
+    window.backgroundAnimationInterval = setInterval(() => {
+        if (window.activeLines.length < 40 && Math.random() < 0.6) {
             createFlowingLine();
         }
-    }, 1000);
+    }, 800);
 }
 
 function createFlowingLine() {
@@ -157,10 +428,31 @@ function createFlowingLine() {
     lineElement.className = 'flowing-line';
     container.appendChild(lineElement);
     
-    // Always start from the left side at a random y position
-    const startY = Math.random() * (containerRect.height - 100) + 50;
-    const speed = Math.random() * 1.5 + 0.5; // pixels per frame
-    const maxSegments = Math.floor(Math.random() * 5) + 8; // Increased from 5-10 to 8-13 segments
+    // Start position can be on any side of the screen
+    let startX, startY;
+    const side = Math.floor(Math.random() * 4); // 0: left, 1: top, 2: right, 3: bottom
+    
+    switch (side) {
+        case 0: // left
+            startX = 0;
+            startY = Math.random() * containerRect.height;
+            break;
+        case 1: // top
+            startX = Math.random() * containerRect.width;
+            startY = 0;
+            break;
+        case 2: // right
+            startX = containerRect.width;
+            startY = Math.random() * containerRect.height;
+            break;
+        case 3: // bottom
+            startX = Math.random() * containerRect.width;
+            startY = containerRect.height;
+            break;
+    }
+    
+    const speed = Math.random() * 1.5 + 0.7; // pixels per frame, slightly faster
+    const maxSegments = Math.floor(Math.random() * 7) + 10; // 10-17 segments
     
     // Pick a color
     const colors = [
@@ -171,16 +463,25 @@ function createFlowingLine() {
     ];
     const color = colors[Math.floor(Math.random() * colors.length)];
     
+    // Initial direction based on starting side
+    let initialDirection;
+    switch (side) {
+        case 0: initialDirection = 'right'; break;
+        case 1: initialDirection = 'down'; break;
+        case 2: initialDirection = 'left'; break;
+        case 3: initialDirection = 'up'; break;
+    }
+    
     const line = {
         element: lineElement,
         segments: [],
         currentSegment: 0,
-        x: 0,
+        x: startX,
         y: startY,
         color: color,
         opacity: (Math.random() * 0.3) + 0.3, // 0.3-0.6
         speed: speed,
-        direction: 'right', // Start moving right
+        direction: initialDirection,
         width: 0,
         height: 0,
         maxSegments: maxSegments,
@@ -195,7 +496,7 @@ function createFlowingLine() {
     lineElement.style.top = `${line.y}px`;
     
     createLineSegment(line);
-    activeLines.push(line);
+    window.activeLines.push(line);
 }
 
 function createLineSegment(line) {
@@ -204,34 +505,42 @@ function createLineSegment(line) {
         return;
     }
     
-    // For the initial segment, always move right
+    // Direction logic - more varied for all directions
     if (line.currentSegment === 0) {
-        line.direction = 'right';
+        // Keep initial direction for first segment
     } else {
-        // For subsequent segments, only change direction 90 degrees
-        // If moving horizontally, can only change to up or down
-        // If moving vertically, can only change to right
+        // For subsequent segments, allow changing direction based on current direction
+        const rand = Math.random();
+        
         if (line.direction === 'right') {
-            // When moving right, can change to up or down or continue right
-            // Reduced chance to change direction to favor right movement
-            const rand = Math.random();
             if (rand < 0.2) {
                 line.direction = 'up';
             } else if (rand < 0.4) {
                 line.direction = 'down';
             }
             // Otherwise keep going right
-        } else {
-            // When moving up or down, can only change to right
-            if (Math.random() < 0.8) { // Increased chance to go right from 0.7 to 0.8
-                line.direction = 'right';
+        } else if (line.direction === 'left') {
+            if (rand < 0.2) {
+                line.direction = 'up';
+            } else if (rand < 0.4) {
+                line.direction = 'down';
             }
-            // Otherwise keep going in the same vertical direction
+            // Otherwise keep going left
+        } else if (line.direction === 'up') {
+            if (rand < 0.4) {
+                line.direction = Math.random() < 0.5 ? 'right' : 'left';
+            }
+            // Otherwise keep going up
+        } else if (line.direction === 'down') {
+            if (rand < 0.4) {
+                line.direction = Math.random() < 0.5 ? 'right' : 'left';
+            }
+            // Otherwise keep going down
         }
     }
     
-    // Increased segment length for longer lines
-    const segmentLength = Math.random() * 200 + 100; // 100-300 pixels (was 50-200)
+    // Longer segment lengths for better coverage
+    const segmentLength = Math.random() * 250 + 100; // 100-350 pixels
     const container = document.getElementById('background-container');
     const containerRect = container.getBoundingClientRect();
     
@@ -255,35 +564,44 @@ function createLineSegment(line) {
         endX = line.x + segmentLength;
         segment.style.width = `${segmentLength}px`;
         segment.style.height = '2px';
+    } else if (line.direction === 'left') {
+        endX = line.x - segmentLength;
+        segment.style.width = `${segmentLength}px`;
+        segment.style.height = '2px';
+        segment.style.left = `${endX}px`; // Adjust left position for left direction
     } else if (line.direction === 'up') {
         endY = line.y - segmentLength;
         segment.style.width = '2px';
         segment.style.height = `${segmentLength}px`;
-        // For vertical segments, we need to adjust the start position to the top
-        segment.style.top = `${endY}px`;
+        segment.style.top = `${endY}px`; // Adjust top position for up direction
     } else if (line.direction === 'down') {
         endY = line.y + segmentLength;
         segment.style.width = '2px';
         segment.style.height = `${segmentLength}px`;
     }
     
-    // Boundary checks - now we don't restrict the right boundary to let lines go all the way to the edge
-    // Only check if we're going beyond the container width for cleanup purposes
-    if (endX > containerRect.width + 300) { // Allow to go 300px beyond viewport
-        endX = containerRect.width + 300;
+    // Boundary checks with more generous limits
+    // Allow lines to go 500px beyond viewport in any direction
+    if (endX > containerRect.width + 500) {
+        endX = containerRect.width + 500;
         segment.style.width = `${endX - line.x}px`;
-        
-        // If we've reached far beyond the right edge, mark as completed
+        line.completed = true;
+    } else if (endX < -500) {
+        endX = -500;
+        segment.style.width = `${line.x - endX}px`;
+        segment.style.left = `${endX}px`;
         line.completed = true;
     }
     
-    if (endY < 0) {
-        endY = 20;
+    if (endY < -500) {
+        endY = -500;
         segment.style.height = `${line.y - endY}px`;
         segment.style.top = `${endY}px`;
-    } else if (endY > containerRect.height) {
-        endY = containerRect.height - 20;
+        line.completed = true;
+    } else if (endY > containerRect.height + 500) {
+        endY = containerRect.height + 500;
         segment.style.height = `${endY - line.y}px`;
+        line.completed = true;
     }
     
     // Update line position for next segment
@@ -314,7 +632,7 @@ function createLineSegment(line) {
 function checkForPotentialMerges(line) {
     if (line.merged) return;
     
-    for (const otherLine of activeLines) {
+    for (const otherLine of window.activeLines) {
         if (line === otherLine || otherLine.merged) continue;
         
         const distance = Math.sqrt(Math.pow(line.x - otherLine.x, 2) + Math.pow(line.y - otherLine.y, 2));
@@ -362,8 +680,8 @@ function createMergePoint(x, y, color) {
 
 function animateFlowingLines() {
     if (!document.hidden) {
-        for (let i = activeLines.length - 1; i >= 0; i--) {
-            const line = activeLines[i];
+        for (let i = window.activeLines.length - 1; i >= 0; i--) {
+            const line = window.activeLines[i];
             
             // If the line is not completed, create a new segment
             if (!line.completed && !line.merged && line.segments.length > 0) {
@@ -411,7 +729,7 @@ function animateFlowingLines() {
                                 }
                             }
                             container.removeChild(line.element);
-                            activeLines.splice(activeLines.indexOf(line), 1);
+                            window.activeLines.splice(window.activeLines.indexOf(line), 1);
                         }
                     }, 500);
                 }, 3000);
