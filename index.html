@@ -7,13 +7,22 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Page loading animation -->
+    <div class="page-transition">
+        <div class="loader"></div>
+    </div>
+    
     <!-- Background container will be created dynamically via JavaScript -->
     
     <header>
         <div class="container">
-            <h1>Matheus Duque - <span class="subtitle">Software Developer</span></h1>
+            <h1>Matheus Duque <span class="subtitle">Software Developer</span></h1>
         </div>
     </header>
 
@@ -35,7 +44,7 @@
     <section id="hero" class="container">
         <div class="hero-content">
             <div class="hero-text">
-                <h2>Building intelligent solutions with code and data</h2>
+                <h2>Building <span>intelligent solutions</span> with code and data</h2>
                 <p>Software Developer specializing in MLOps and Autonomous Solutions at Scania</p>
                 <div class="hero-buttons">
                     <a href="#contact" class="btn primary">Get in touch</a>
@@ -50,9 +59,11 @@
 
     <section id="about" class="container section">
         <h2>👋 About Me</h2>
-        <div class="about-content">
+        <div class="about-content card-base">
             <p>I'm a Software Developer based in Sweden, currently working at Scania Sverige. With a focus on MLOps and Autonomous Solutions, I specialize in combining software engineering expertise with ML capabilities to tackle complex problems in the automotive industry.</p>
+            
             <p>My career journey has taken me from Brazil to Sweden, with experience in various roles from Engineer Intern to Team Leader, focusing on logistics, data analysis, and now software development for autonomous vehicles.</p>
+            
             <p>When I'm not coding, you can find me enjoying FPS, RTS, RPG, or card games, reading sci-fi, fantasy, or horror books, or staying active through swimming, biking, and hiking.</p>
         </div>
     </section>
@@ -60,7 +71,7 @@
     <section id="skills" class="container section">
         <h2>💻 Technical Skills</h2>
         <div class="skills-container">
-            <div class="skill-category">
+            <div class="skill-category card-base">
                 <h3><i class="fas fa-code"></i> Programming Languages</h3>
                 <ul class="skill-list">
                     <li>
@@ -142,7 +153,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="skill-category">
+            <div class="skill-category card-base">
                 <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
                 <ul class="skill-list">
                     <li>
@@ -224,7 +235,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="skill-category">
+            <div class="skill-category card-base">
                 <h3><i class="fas fa-chart-line"></i> Data Science</h3>
                 <ul class="skill-list">
                     <li>
@@ -272,6 +283,17 @@
                         </div>
                     </li>
                     <li>
+                        <img src="/icons/scikit-learn.svg" alt="scikit-learn">
+                        <span class="skill-name">Scikit-learn</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
                         <img src="/icons/Matplotlib.svg" alt="Matplotlib">
                         <span class="skill-name">Matplotlib</span>
                         <div class="skill-rating">
@@ -282,9 +304,20 @@
                             <i class="fas fa-star"></i>
                         </div>
                     </li>
+                    <li>
+                        <img src="https://plotly.com/all_static/images/icon-dash.png" alt="Plotly">
+                        <span class="skill-name">Plotly</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
                 </ul>
             </div>
-            <div class="skill-category">
+            <div class="skill-category card-base">
                 <h3><i class="fas fa-robot"></i> AI & ML</h3>
                 <ul class="skill-list">
                     <li>
@@ -333,7 +366,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="skill-category">
+            <div class="skill-category card-base">
                 <h3><i class="fas fa-robot"></i> LLMs & Generative AI</h3>
                 <ul class="skill-list">
                     <li>
@@ -352,9 +385,13 @@
                         <img src="/icons/gemini.svg" alt="Gemini">
                         <span class="skill-name">Gemini</span>
                     </li>
+                    <li>
+                        <img src="/icons/ollama.png" alt="ollama">
+                        <span class="skill-name">ollama</span>
+                    </li>
                 </ul>
             </div>
-            <div class="skill-category">
+            <div class="skill-category card-base">
                 <h3><i class="fas fa-database"></i> Databases</h3>
                 <ul class="skill-list">
                     <li>
@@ -369,8 +406,8 @@
                         </div>
                     </li>
                     <li>
-                        <img src="/icons/PostgresSQL.svg" alt="PostgreSQL">
-                        <span class="skill-name">Postgres</span>
+                        <img src="/icons/PostgreSQL.svg" alt="PostgreSQL">
+                        <span class="skill-name">PostgreSQL</span>
                         <div class="skill-rating">
                             <i class="fas fa-star filled"></i>
                             <i class="fas fa-star filled"></i>
@@ -392,9 +429,20 @@
                     </li>
                 </ul>
             </div>
-            <div class="skill-category">
+            <div class="skill-category card-base">
                 <h3><i class="fas fa-window-maximize"></i> Web Development</h3>
                 <ul class="skill-list">
+                    <li>
+                        <img src="/icons/Streamlit.svg" alt="Streamlit">
+                        <span class="skill-name">Streamlit</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
                     <li>
                         <img src="/icons/Django.svg" alt="Django">
                         <span class="skill-name">Django</span>
@@ -418,6 +466,17 @@
                         </div>
                     </li>
                     <li>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="CSS">
+                        <span class="skill-name">CSS</span>
+                        <div class="skill-rating">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>
                         <img src="/icons/React.svg" alt="React">
                         <span class="skill-name">React</span>
                         <div class="skill-rating">
@@ -430,7 +489,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="skill-category">
+            <div class="skill-category card-base">
                 <h3><i class="fas fa-code-branch"></i> Version Control & CI/CD</h3>
                 <ul class="skill-list">
                     <li>
@@ -468,7 +527,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="skill-category">
+            <div class="skill-category card-base">
                 <h3><i class="fas fa-tools"></i> Tools & Productivity</h3>
                 <ul class="skill-list">
                     <li>
@@ -511,7 +570,7 @@
                 <div class="timeline-date">
                     <span>Feb 2024 - Present</span>
                 </div>
-                <div class="timeline-content">
+                <div class="timeline-content card-base">
                     <h3>Software Developer</h3>
                     <h4>Scania Sverige, Södertälje, Sweden <img src="images/flags/sweden.png" alt="Sweden Flag" class="country-flag"></h4>
                     <p>Working on DataOps, ModelOps and DevOps (MLOps) for Autonomous Solutions.</p>
@@ -521,7 +580,7 @@
                 <div class="timeline-date">
                     <span>Aug 2022 - Jan 2024</span>
                 </div>
-                <div class="timeline-content">
+                <div class="timeline-content card-base">
                     <h3>Team Leader Supply Chain Developer</h3>
                     <h4>Scania Sverige, Södertälje, Sweden <img src="images/flags/sweden.png" alt="Sweden Flag" class="country-flag"></h4>
                     <p>Worked on a digitalization and automation team for global inhouse logistics development, responsible for developing solutions worldwide and connecting all production units.</p>
@@ -531,7 +590,7 @@
                 <div class="timeline-date">
                     <span>Aug 2021 - Aug 2022</span>
                 </div>
-                <div class="timeline-content">
+                <div class="timeline-content card-base">
                     <h3>Logistics Developer</h3>
                     <h4>Scania Sverige, Sweden <img src="images/flags/sweden.png" alt="Sweden Flag" class="country-flag"></h4>
                     <p>Focused on digitalization and automation of logistics. Started projects to make it more efficient and stable. Managed projects/forums with all production units (Brazil, Netherlands, Sweden and France) and started agile implementation within our team.</p>
@@ -541,7 +600,7 @@
                 <div class="timeline-date">
                     <span>Mar 2021 - Aug 2021</span>
                 </div>
-                <div class="timeline-content">
+                <div class="timeline-content card-base">
                     <h3>Data Analyst</h3>
                     <h4>Scania Group, Brazil <img src="images/flags/brazil.png" alt="Brazil Flag" class="country-flag"></h4>
                     <p>Balanced between the data governance and digital office teams, aiding them on the digitalization and automation of processes within the company.</p>
@@ -551,7 +610,7 @@
                 <div class="timeline-date">
                     <span>Mar 2020 - Mar 2021</span>
                 </div>
-                <div class="timeline-content">
+                <div class="timeline-content card-base">
                     <h3>Process Analyst</h3>
                     <h4>Scania Group, São Bernardo do Campo, Brazil <img src="images/flags/brazil.png" alt="Brazil Flag" class="country-flag"></h4>
                     <p>Responsible for creating tools to aid the logistics team regarding maintaining the flow stable and reduce costs. Projects built using tools like Power BI, AWS and primarily written in Python.</p>
@@ -561,7 +620,7 @@
                 <div class="timeline-date">
                     <span>Oct 2018 - Mar 2020</span>
                 </div>
-                <div class="timeline-content">
+                <div class="timeline-content card-base">
                     <h3>Technician</h3>
                     <h4>Scania Group, São Paulo, Brazil <img src="images/flags/brazil.png" alt="Brazil Flag" class="country-flag"></h4>
                     <p>Created dashboards to aid logistics processes using Power BI, automated complex processes with Python programming and Oracle SQL. Participated in assessments on warehouses in Brazil, Sweden and Netherlands.</p>
@@ -571,7 +630,7 @@
                 <div class="timeline-date">
                     <span>May 2018 - Oct 2018</span>
                 </div>
-                <div class="timeline-content">
+                <div class="timeline-content card-base">
                     <h3>Engineer Intern</h3>
                     <h4>Scania Group, São Paulo, Brazil <img src="images/flags/brazil.png" alt="Brazil Flag" class="country-flag"></h4>
                     <p>Created dashboards to aid the logistic center with information about ongoing process using Power BI. Developed forecast tools to predict the warehouse occupation for the next few months using Python.</p>
@@ -583,7 +642,7 @@
     <section id="education" class="container section">
         <h2>🎓 Education</h2>
         <div class="education-container">
-            <div class="education-item">
+            <div class="education-item card-base">
                 <div class="education-logo">
                     <img src="icons/Maua.png" alt="Mauá Institute of Technology" class="edu-logo">
                 </div>
@@ -608,7 +667,7 @@
     <section id="certifications" class="container section">
         <h2>🏆 Certifications</h2>
         <div class="certifications-container">
-            <div class="certification-card">
+            <div class="certification-card card-base">
                 <div class="certification-logo">
                     <img src="/certificates/databricks-certified-data-engineer-associate.png" alt="Databricks Certification" class="cert-image">
                 </div>
@@ -617,7 +676,7 @@
                     <a href="https://credentials.databricks.com/195e3c99-67f5-4122-81bb-634012f316ad#acc.XQfSaeBl" target="_blank" class="certification-link">View Credential</a>
                 </div>
             </div>
-            <div class="certification-card">
+            <div class="certification-card card-base">
                 <div class="certification-logo">
                     <img src="/certificates/aws-certified-cloud-practitioner.png" alt="AWS Certification" class="cert-image">
                 </div>
@@ -632,7 +691,7 @@
     <section id="languages" class="container section">
         <h2>🌍 Languages</h2>
         <div class="languages-container">
-            <div class="language-item">
+            <div class="language-item card-base">
                 <span class="language-name">Portuguese <img src="images/flags/brazil.png" alt="Brazil Flag" class="language-flag"></span>
                 <div class="language-proficiency">
                     <span class="proficiency-dot filled"></span>
@@ -642,7 +701,7 @@
                     <span class="proficiency-dot filled"></span>
                 </div>
             </div>
-            <div class="language-item">
+            <div class="language-item card-base">
                 <span class="language-name">English <img src="images/flags/us.png" alt="US Flag" class="language-flag"></span>
                 <div class="language-proficiency">
                     <span class="proficiency-dot filled"></span>
@@ -652,7 +711,7 @@
                     <span class="proficiency-dot filled"></span>
                 </div>
             </div>
-            <div class="language-item">
+            <div class="language-item card-base">
                 <span class="language-name">Spanish <img src="images/flags/mexico.png" alt="Mexico Flag" class="language-flag"></span>
                 <div class="language-proficiency">
                     <span class="proficiency-dot filled"></span>
@@ -662,7 +721,7 @@
                     <span class="proficiency-dot"></span>
                 </div>
             </div>
-            <div class="language-item">
+            <div class="language-item card-base">
                 <span class="language-name">Swedish <img src="images/flags/sweden.png" alt="Sweden Flag" class="language-flag"></span>
                 <div class="language-proficiency">
                     <span class="proficiency-dot filled"></span>
@@ -678,7 +737,7 @@
     <section id="projects" class="container section">
         <h2>💼 Featured Projects</h2>
         <div class="projects-grid">
-            <div class="project-card">
+            <div class="project-card card-base">
                 <div class="project-header">
                     <div class="project-gif-container">
                         <img src="gifs/Mosquito.gif" alt="Project Mosquito Demo" class="project-gif">
@@ -696,7 +755,7 @@
                     </a>
                 </div>
             </div>
-            <div class="project-card">
+            <div class="project-card card-base">
                 <div class="project-header">
                     <div class="project-gif-container">
                         <img src="gifs/CommentLinker.gif" alt="Comment-Linker Demo" class="project-gif">
@@ -745,5 +804,6 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <script src="js/skillcards.js?v=1.2"></script>
 </body>
 </html> 

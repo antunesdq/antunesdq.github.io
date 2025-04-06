@@ -125,20 +125,18 @@ function createBackgroundContainer() {
         existingPipeline.remove();
     }
     
+    // Remove existing background container if it exists
+    const existingContainer = document.getElementById('background-container');
+    if (existingContainer) {
+        existingContainer.remove();
+    }
+    
     // Create the container
     const container = document.createElement('div');
     container.id = 'background-container';
-    container.style.position = 'fixed';
-    container.style.top = '0';
-    container.style.left = '0';
-    container.style.width = '100vw';
-    container.style.height = '100vh';
-    container.style.zIndex = '-1';
-    container.style.overflow = 'hidden';
-    container.style.pointerEvents = 'none';
     
-    // Set a dark background with subtle gradient
-    container.style.background = 'linear-gradient(135deg, var(--darker-color) 0%, var(--dark-color) 100%)';
+    // We'll rely on CSS styles for positioning and z-index
+    // This ensures consistency with the CSS rules we've defined
     
     // Insert at the beginning of the body
     body.insertBefore(container, body.firstChild);
@@ -146,34 +144,90 @@ function createBackgroundContainer() {
     // Add a noise texture overlay
     const noiseOverlay = document.createElement('div');
     noiseOverlay.id = 'noise-overlay';
-    noiseOverlay.style.position = 'fixed';
-    noiseOverlay.style.top = '0';
-    noiseOverlay.style.left = '0';
-    noiseOverlay.style.width = '100vw';
-    noiseOverlay.style.height = '100vh';
-    noiseOverlay.style.zIndex = '-1';
-    noiseOverlay.style.opacity = '0.03';
-    noiseOverlay.style.pointerEvents = 'none';
     noiseOverlay.style.backgroundImage = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`;
+    
+    // Insert overlay
     body.insertBefore(noiseOverlay, body.firstChild);
     
     // Global variables for animation tracking
     window.activeLines = [];
     window.backgroundAnimationInterval = null;
+    
+    // Also set body and html background to match
+    document.documentElement.style.backgroundColor = 'var(--dark-color)';
+    body.style.backgroundColor = 'var(--dark-color)';
+    
+    // Ensure background covers entire document, not just viewport
+    function updateBackgroundSize() {
+        const docHeight = Math.max(
+            document.body.scrollHeight,
+            document.body.offsetHeight,
+            document.documentElement.clientHeight,
+            document.documentElement.scrollHeight,
+            document.documentElement.offsetHeight
+        );
+        container.style.height = `${docHeight}px`;
+        noiseOverlay.style.height = `${docHeight}px`;
+    }
+    
+    // Update size initially and on resize
+    updateBackgroundSize();
+    window.addEventListener('resize', updateBackgroundSize);
+    
+    // Also update after content load events might change page height
+    window.addEventListener('load', updateBackgroundSize);
+    document.addEventListener('DOMContentLoaded', updateBackgroundSize);
+    
+    console.log("Background container created with ID:", container.id);
 }
 
 // Set up parallax scrolling effect for background
 function setupParallaxEffect() {
     const container = document.getElementById('background-container');
     
+    if (!container) return; // Make sure container exists
+    
     // Update on scroll
     window.addEventListener('scroll', () => {
         const scrollPosition = window.pageYOffset;
-        const parallaxRate = scrollPosition * 0.15;
+        const parallaxRate = scrollPosition * 0.1; // Parallax movement rate (slower than scroll)
         
         // Move the background upward as user scrolls down
         container.style.transform = `translateY(-${parallaxRate}px)`;
+        container.style.position = 'fixed';
+        container.style.top = '0';
+        
+        // Update noise overlay to match
+        const noiseOverlay = document.getElementById('noise-overlay');
+        if (noiseOverlay) {
+            noiseOverlay.style.transform = `translateY(-${parallaxRate}px)`;
+            noiseOverlay.style.position = 'fixed';
+            noiseOverlay.style.top = '0';
+        }
     });
+    
+    // Update background size on page content changes
+    function updateBackgroundSize() {
+        const docHeight = Math.max(
+            document.body.scrollHeight,
+            document.body.offsetHeight,
+            document.documentElement.clientHeight,
+            document.documentElement.scrollHeight,
+            document.documentElement.offsetHeight
+        );
+        container.style.height = `${docHeight}px`;
+        
+        const noiseOverlay = document.getElementById('noise-overlay');
+        if (noiseOverlay) {
+            noiseOverlay.style.height = `${docHeight}px`;
+        }
+    }
+    
+    // Resize event to ensure background covers full document
+    window.addEventListener('resize', updateBackgroundSize);
+    
+    // Call it initially to ensure proper size
+    updateBackgroundSize();
 }
 
 // Scroll animations
@@ -403,26 +457,39 @@ function animateHeroHeading() {
 
 // Background animation functions
 function initBackground() {
+    console.log("Initializing background animation");
     clearInterval(window.backgroundAnimationInterval);
     const lineContainer = document.getElementById('background-container');
+    if (!lineContainer) {
+        console.error("Background container not found!");
+        return;
+    }
+    
     lineContainer.innerHTML = '';
     window.activeLines = [];
     
-    // Create initial flowing lines - increased from 15 to 25
-    for (let i = 0; i < 25; i++) {
+    // Create initial flowing lines - increased to 40
+    for (let i = 0; i < 40; i++) {
         createFlowingLine();
     }
     
+    console.log(`Created ${window.activeLines.length} initial background lines`);
+    
     // Periodically create new lines
     window.backgroundAnimationInterval = setInterval(() => {
-        if (window.activeLines.length < 40 && Math.random() < 0.6) {
+        if (window.activeLines.length < 60 && Math.random() < 0.7) {
             createFlowingLine();
         }
-    }, 800);
+    }, 600);
 }
 
 function createFlowingLine() {
     const container = document.getElementById('background-container');
+    if (!container) {
+        console.error("Background container not found when creating line!");
+        return;
+    }
+    
     const containerRect = container.getBoundingClientRect();
     const lineElement = document.createElement('div');
     lineElement.className = 'flowing-line';
@@ -546,11 +613,14 @@ function createLineSegment(line) {
     
     const segment = document.createElement('div');
     segment.className = 'line-segment';
+    
+    // Set base styles directly to ensure they're applied
     segment.style.position = 'absolute';
     segment.style.backgroundColor = line.color;
     segment.style.opacity = line.opacity;
     segment.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.3)';
     segment.style.zIndex = '0';
+    segment.style.pointerEvents = 'none';
     
     // Set the start position of the segment
     segment.style.left = `${line.x}px`;
@@ -562,22 +632,22 @@ function createLineSegment(line) {
     // Calculate end position based on direction
     if (line.direction === 'right') {
         endX = line.x + segmentLength;
-        segment.style.width = `${segmentLength}px`;
+        segment.style.width = '0px'; // Start at 0 and animate to full width
         segment.style.height = '2px';
     } else if (line.direction === 'left') {
         endX = line.x - segmentLength;
-        segment.style.width = `${segmentLength}px`;
+        segment.style.width = '0px'; // Start at 0 and animate to full width
         segment.style.height = '2px';
-        segment.style.left = `${endX}px`; // Adjust left position for left direction
+        segment.style.left = `${line.x}px`; // Keep original start position for animation
     } else if (line.direction === 'up') {
         endY = line.y - segmentLength;
         segment.style.width = '2px';
-        segment.style.height = `${segmentLength}px`;
-        segment.style.top = `${endY}px`; // Adjust top position for up direction
+        segment.style.height = '0px'; // Start at 0 and animate to full height
+        segment.style.top = `${line.y}px`; // Keep original start position for animation
     } else if (line.direction === 'down') {
         endY = line.y + segmentLength;
         segment.style.width = '2px';
-        segment.style.height = `${segmentLength}px`;
+        segment.style.height = '0px'; // Start at 0 and animate to full height
     }
     
     // Boundary checks with more generous limits
@@ -604,97 +674,76 @@ function createLineSegment(line) {
         line.completed = true;
     }
     
-    // Update line position for next segment
+    // Add segment to the container and update line position
+    container.appendChild(segment);
+    
+    // Final width/height values for animation targets
+    let finalWidth = 0;
+    let finalHeight = 0;
+    
+    if (line.direction === 'right') {
+        finalWidth = Math.abs(endX - line.x);
+    } else if (line.direction === 'left') {
+        finalWidth = Math.abs(line.x - endX);
+        // For left-directed segments, set the left position to the endpoint
+        segment.style.left = `${endX}px`;
+    } else if (line.direction === 'up') {
+        finalHeight = Math.abs(line.y - endY);
+        // For up-directed segments, set the top position to the endpoint
+        segment.style.top = `${endY}px`;
+    } else if (line.direction === 'down') {
+        finalHeight = Math.abs(endY - line.y);
+    }
+    
+    // Update segment with animation data
+    const segmentData = {
+        element: segment,
+        direction: line.direction,
+        width: finalWidth,
+        height: finalHeight,
+        progress: 0,
+        animationDuration: segmentLength / line.speed
+    };
+    
+    // Force a reflow to ensure styles are applied before animation starts
+    segment.offsetHeight;
+    
+    line.segments.push(segmentData);
+    line.currentSegment++;
+    
+    // Update line's current position
     line.x = endX;
     line.y = endY;
     
-    // Store segment properties for animation
-    const segmentObj = {
-        element: segment,
-        startX: parseFloat(segment.style.left),
-        startY: parseFloat(segment.style.top),
-        width: parseFloat(segment.style.width || 0),
-        height: parseFloat(segment.style.height || 0),
-        direction: line.direction,
-        progress: 0,
-        animationDuration: segmentLength / line.speed // Duration based on length and speed
-    };
-    
-    line.segments.push(segmentObj);
-    container.appendChild(segment);
-    
-    // Check for potential merges with other lines
-    checkForPotentialMerges(line);
-    
-    line.currentSegment++;
-}
-
-function checkForPotentialMerges(line) {
-    if (line.merged) return;
-    
-    for (const otherLine of window.activeLines) {
-        if (line === otherLine || otherLine.merged) continue;
-        
-        const distance = Math.sqrt(Math.pow(line.x - otherLine.x, 2) + Math.pow(line.y - otherLine.y, 2));
-        
-        if (distance < 15 && Math.random() < 0.5) {
-            // Merge the lines - make this line continue from the other line's position
-            line.x = otherLine.x;
-            line.y = otherLine.y;
-            line.direction = otherLine.direction;
-            
-            // Mark the other line as merged so it stops growing
-            otherLine.merged = true;
-            otherLine.completed = true;
-            
-            // Create a visual merge point
-            createMergePoint(line.x, line.y, line.color);
-            break;
-        }
-    }
-}
-
-function createMergePoint(x, y, color) {
-    const container = document.getElementById('background-container');
-    const mergePoint = document.createElement('div');
-    mergePoint.className = 'merge-point';
-    mergePoint.style.position = 'absolute';
-    mergePoint.style.width = '4px';
-    mergePoint.style.height = '4px';
-    mergePoint.style.borderRadius = '50%';
-    mergePoint.style.backgroundColor = color;
-    mergePoint.style.left = `${x - 2}px`;
-    mergePoint.style.top = `${y - 2}px`;
-    mergePoint.style.boxShadow = `0 0 8px ${color}`;
-    mergePoint.style.zIndex = '1';
-    container.appendChild(mergePoint);
-    
-    // Remove the merge point after animation
-    setTimeout(() => {
-        mergePoint.style.opacity = '0';
-        setTimeout(() => {
-            container.removeChild(mergePoint);
-        }, 500);
-    }, 1500);
+    // Log for debugging
+    console.log(`Created ${line.direction} segment: ${finalWidth}x${finalHeight}px`);
 }
 
 function animateFlowingLines() {
     if (!document.hidden) {
+        const container = document.getElementById('background-container');
+        if (!container) return; // Exit if container doesn't exist
+        
         for (let i = window.activeLines.length - 1; i >= 0; i--) {
             const line = window.activeLines[i];
+            
+            // Skip if line is undefined or has no segments
+            if (!line || !line.segments || line.segments.length === 0) continue;
             
             // If the line is not completed, create a new segment
             if (!line.completed && !line.merged && line.segments.length > 0) {
                 const lastSegment = line.segments[line.segments.length - 1];
                 
                 // If the current segment is fully drawn
-                if (lastSegment.progress >= lastSegment.animationDuration) {
+                if (lastSegment && lastSegment.progress >= lastSegment.animationDuration) {
                     createLineSegment(line);
                 }
             }
             
             // Animate all segments of the line
             for (const segment of line.segments) {
+                if (!segment || !segment.element) continue;
+                
                 if (segment.progress < segment.animationDuration) {
                     // Increment progress
                     segment.progress += 1;
@@ -705,7 +754,13 @@ function animateFlowingLines() {
                     // Update the segment visibility based on its direction
                     if (segment.direction === 'right') {
                         segment.element.style.width = `${segment.width * visibilityPercentage}px`;
-                    } else if (segment.direction === 'up' || segment.direction === 'down') {
+                    } else if (segment.direction === 'left') {
+                        const newWidth = segment.width * visibilityPercentage;
+                        segment.element.style.width = `${newWidth}px`;
+                    } else if (segment.direction === 'up') {
+                        const newHeight = segment.height * visibilityPercentage;
+                        segment.element.style.height = `${newHeight}px`;
+                    } else if (segment.direction === 'down') {
                         segment.element.style.height = `${segment.height * visibilityPercentage}px`;
                     }
                 }
@@ -713,26 +768,44 @@ function animateFlowingLines() {
             
             // Remove completed lines after a delay
             if (line.completed && line.segments.every(s => s.progress >= s.animationDuration)) {
+                // Schedule removal with a delay
                 setTimeout(() => {
+                    // First fade out
                     for (const segment of line.segments) {
-                        if (segment.element.parentNode) {
+                        if (segment.element && segment.element.parentNode) {
                             segment.element.style.opacity = '0';
+                            segment.element.style.transition = 'opacity 0.5s ease';
                         }
                     }
                     
+                    // Then remove from DOM
                     setTimeout(() => {
-                        if (line.element.parentNode) {
-                            const container = document.getElementById('background-container');
-                            for (const segment of line.segments) {
-                                if (segment.element.parentNode) {
-                                    container.removeChild(segment.element);
+                        const container = document.getElementById('background-container');
+                        if (!container) return;
+                        
+                        if (line.element && line.element.parentNode) {
+                            try {
+                                for (const segment of line.segments) {
+                                    if (segment.element && segment.element.parentNode) {
+                                        container.removeChild(segment.element);
+                                    }
                                 }
+                                container.removeChild(line.element);
+                                
+                                // Remove line from array
+                                const index = window.activeLines.indexOf(line);
+                                if (index > -1) {
+                                    window.activeLines.splice(index, 1);
+                                }
+                            } catch (e) {
+                                console.error('Error removing line elements:', e);
                             }
-                            container.removeChild(line.element);
-                            window.activeLines.splice(window.activeLines.indexOf(line), 1);
                         }
                     }, 500);
                 }, 3000);
+                
+                // Mark as fading so we don't try to remove it again
+                line.fading = true;
             }
         }
     }
