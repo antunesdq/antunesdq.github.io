@@ -773,6 +773,24 @@
                     </a>
                 </div>
             </div>
+            <div class="project-card card-base">
+                <div class="project-header">
+                    <div class="project-gif-container">
+                        <img src="images/parent-companion.png" alt="Parent Companion App Icon" class="project-gif">
+                    </div>
+                    <div class="project-overlay">
+                    <i class="fas fa-baby"></i>
+                    <h3>Parent Companion</h3>
+                    </div>
+                </div>
+                <p>Flutter app that keeps a baby's routine in one place with quick entry, clear visuals, and sharing across caretakers.</p>
+                <div class="project-footer">
+                    <span class="project-tech">Flutter</span>
+                    <a href="/projects/Parental-Companion/" class="project-link">
+                        <i class="fas fa-arrow-right"></i> View project
+                    </a>
+                </div>
+            </div>
             <!-- More project cards can be added here -->
         </div>
     </section>
@@ -799,11 +817,14 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Matheus Duque. All rights reserved.</p>
+            <p>&copy; <span id="current-year">2026</span> Matheus Duque. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="js/script.js"></script>
     <script src="js/skillcards.js?v=1.2"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
-</html> 
+</html>
